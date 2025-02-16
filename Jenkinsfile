@@ -3,7 +3,7 @@ agent any
     stages {
         stage('Build') {
             agent {
-                any {
+                docker {
                     image node:18-alpine
                     reuseNode true
                 }
