@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             agent {
-                docker {
+                dockerContainer {
                     image node:18-alpine
                 }
             }
