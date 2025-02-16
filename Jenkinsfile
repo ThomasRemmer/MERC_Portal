@@ -1,16 +1,16 @@
 pipeline {
-    agent any 
-
-
+    agent any
     stages {
-        agent {
-        docker { image 'node:22.14.0-alpine3.21'}
-        resuseNode true
-    }
-        stage('Build') { 
+        stage('Build') {
+            agent {
+                docker {
+                    image 'node:22.14.0-alpine3.21'
+
+                    reuseNode true
+                }
+            }
             steps {
                 sh 'node --version'
-                sh 'npm install' 
             }
         }
     }
