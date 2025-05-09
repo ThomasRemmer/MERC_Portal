@@ -8,6 +8,6 @@ export default defineNuxtConfig({
     plugins: [tailwindcss()],
   },
   app: {
-    baseURL: "/MERC-Portal/", // Replace 'repository-name' with your GitHub repository name
+    baseURL: "/MERC_Portal/", // Replace 'repository-name' with your GitHub repository name
   },
 });
