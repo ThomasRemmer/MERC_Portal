@@ -1,5 +1,9 @@
 <template>
-    <img :src="icon" :style="iconStyle" @click="handleClick" />
+    <div class="desktop-icon">
+        <img :src="icon" :style="iconStyle" @click="handleClick" />
+        <p>{{ text }}</p>
+    </div>
+
   </template>
   
   <script>
@@ -7,7 +11,8 @@
     props: {
       icon: String,
       iconStyle: Object,
-      targetPage: String, 
+      targetPage: String,
+      text: String, 
     },
     methods: {
       handleClick() {
@@ -21,5 +26,12 @@
       width: 50px;
       height: 50px;
       cursor: pointer;
+    }
+    .desktop-icon {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      margin: 10px;
     }
     </style>
