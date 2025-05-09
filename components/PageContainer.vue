@@ -8,9 +8,14 @@
       height: size.height + 'px',
     }"
     @mousedown="startDrag"
+    @touchstart="startDrag"
   >
     <!-- Top bar -->
-    <div class="top-bar" @mousedown.stop="startDrag">
+    <div
+      class="top-bar"
+      @mousedown.stop="startDrag"
+      @touchstart.stop="startDrag"
+    >
       <span class="title">{{ title }}</span>
       <button class="close-button" @click="closeContainer">✕</button>
     </div>
@@ -19,7 +24,11 @@
     <slot></slot>
 
     <!-- Resize handle -->
-    <div class="resize-handle" @mousedown.stop="startResize"></div>
+    <div
+      class="resize-handle"
+      @mousedown.stop="startResize"
+      @touchstart.stop="startResize"
+    ></div>
   </div>
 </template>
 
@@ -44,41 +53,67 @@ export default {
   methods: {
     startDrag(event) {
       this.isDragging = true;
-      this.offset.x = event.clientX - this.position.x;
-      this.offset.y = event.clientY - this.position.y;
+      const clientX = event.touches ? event.touches[0].clientX : event.clientX;
+      const clientY = event.touches ? event.touches[0].clientY : event.clientY;
+      this.offset.x = clientX - this.position.x;
+      this.offset.y = clientY - this.position.y;
       document.addEventListener("mousemove", this.onDrag);
       document.addEventListener("mouseup", this.stopDrag);
+      document.addEventListener("touchmove", this.onDrag);
+      document.addEventListener("touchend", this.stopDrag);
+    },
+    onDrag(event) {
+      if (this.isDragging) {
+        const clientX = event.touches
+          ? event.touches[0].clientX
+          : event.clientX;
+        const clientY = event.touches
+          ? event.touches[0].clientY
+          : event.clientY;
+        this.position.x = clientX - this.offset.x;
+        this.position.y = clientY - this.offset.y;
+      }
     },
     stopDrag() {
       this.isDragging = false;
       document.removeEventListener("mousemove", this.onDrag);
       document.removeEventListener("mouseup", this.stopDrag);
-    },
-    onDrag(event) {
-      if (this.isDragging) {
-        this.position.x = event.clientX - this.offset.x;
-        this.position.y = event.clientY - this.offset.y;
-      }
+      document.removeEventListener("touchmove", this.onDrag);
+      document.removeEventListener("touchend", this.stopDrag);
     },
     startResize(event) {
       this.isResizing = true;
+      const clientX = event.touches ? event.touches[0].clientX : event.clientX;
+      const clientY = event.touches ? event.touches[0].clientY : event.clientY;
       this.resizeStart.width = this.size.width;
       this.resizeStart.height = this.size.height;
-      this.resizeStart.x = event.clientX;
-      this.resizeStart.y = event.clientY;
+      this.resizeStart.x = clientX;
+      this.resizeStart.y = clientY;
       document.addEventListener("mousemove", this.onResize);
       document.addEventListener("mouseup", this.stopResize);
+      document.addEventListener("touchmove", this.onResize);
+      document.addEventListener("touchend", this.stopResize);
+    },
+    onResize(event) {
+      if (this.isResizing) {
+        const clientX = event.touches
+          ? event.touches[0].clientX
+          : event.clientX;
+        const clientY = event.touches
+          ? event.touches[0].clientY
+          : event.clientY;
+        this.size.width =
+          this.resizeStart.width + (clientX - this.resizeStart.x);
+        this.size.height =
+          this.resizeStart.height + (clientY - this.resizeStart.y);
+      }
     },
     stopResize() {
       this.isResizing = false;
       document.removeEventListener("mousemove", this.onResize);
       document.removeEventListener("mouseup", this.stopResize);
-    },
-    onResize(event) {
-      if (this.isResizing) {
-        this.size.width = this.resizeStart.width + (event.clientX - this.resizeStart.x);
-        this.size.height = this.resizeStart.height + (event.clientY - this.resizeStart.y);
-      }
+      document.removeEventListener("touchmove", this.onResize);
+      document.removeEventListener("touchend", this.stopResize);
     },
     closeContainer() {
       this.$emit("close"); // Emit a close event to the parent
