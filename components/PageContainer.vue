@@ -52,6 +52,7 @@ export default {
   },
   methods: {
     startDrag(event) {
+      event.preventDefault();
       this.isDragging = true;
       const clientX = event.touches ? event.touches[0].clientX : event.clientX;
       const clientY = event.touches ? event.touches[0].clientY : event.clientY;
@@ -59,11 +60,12 @@ export default {
       this.offset.y = clientY - this.position.y;
       document.addEventListener("mousemove", this.onDrag);
       document.addEventListener("mouseup", this.stopDrag);
-      document.addEventListener("touchmove", this.onDrag);
+      document.addEventListener("touchmove", this.onDrag, { passive: false });
       document.addEventListener("touchend", this.stopDrag);
     },
     onDrag(event) {
       if (this.isDragging) {
+        event.preventDefault();
         const clientX = event.touches
           ? event.touches[0].clientX
           : event.clientX;
@@ -82,6 +84,7 @@ export default {
       document.removeEventListener("touchend", this.stopDrag);
     },
     startResize(event) {
+      event.preventDefault();
       this.isResizing = true;
       const clientX = event.touches ? event.touches[0].clientX : event.clientX;
       const clientY = event.touches ? event.touches[0].clientY : event.clientY;
@@ -91,11 +94,12 @@ export default {
       this.resizeStart.y = clientY;
       document.addEventListener("mousemove", this.onResize);
       document.addEventListener("mouseup", this.stopResize);
-      document.addEventListener("touchmove", this.onResize);
+      document.addEventListener("touchmove", this.onResize, { passive: false });
       document.addEventListener("touchend", this.stopResize);
     },
     onResize(event) {
       if (this.isResizing) {
+        event.preventDefault();
         const clientX = event.touches
           ? event.touches[0].clientX
           : event.clientX;
@@ -116,7 +120,7 @@ export default {
       document.removeEventListener("touchend", this.stopResize);
     },
     closeContainer() {
-      this.$emit("close"); // Emit a close event to the parent
+      this.$emit("close");
     },
   },
 };
