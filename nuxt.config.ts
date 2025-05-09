@@ -7,4 +7,7 @@ export default defineNuxtConfig({
   vite: {
     plugins: [tailwindcss()],
   },
+  app: {
+    baseURL: "/MERC-Portal/", // Replace 'repository-name' with your GitHub repository name
+  },
 });
