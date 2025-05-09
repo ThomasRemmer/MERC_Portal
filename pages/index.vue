@@ -1,10 +1,13 @@
 <template>
   <div>
     <PageContainer>
-      <h1>Character sheet</h1>
+      <RulesPage />
     </PageContainer>
     <PageContainer>
-      <h1>Rules page</h1>
+      <CharactersPage />
+    </PageContainer>
+    <PageContainer>
+      <CharacterPage />
     </PageContainer>
   </div>
 </template>
@@ -15,6 +18,9 @@ import PageContainer from "@/components/PageContainer.vue";
 export default {
   components: {
     PageContainer,
+    RulesPage: defineAsyncComponent(() => import("./rules.vue")),
+    CharactersPage: defineAsyncComponent(() => import("./characters.vue")),
+    CharacterPage: defineAsyncComponent(() => import("./character.vue")),
   },
 };
 </script>

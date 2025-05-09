@@ -18,8 +18,8 @@
 export default {
   data() {
     return {
-      position: { x: 100, y: 100 }, // Initial position of the window
-      size: { width: 400, height: 300 }, // Initial size of the window
+      position: { x: 100, y: 100 }, 
+      size: { width: 400, height: 300 }, 
       isDragging: false,
       isResizing: false,
       offset: { x: 0, y: 0 },
