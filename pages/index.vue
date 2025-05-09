@@ -9,7 +9,7 @@
 
 
     <div class="page-containers">
-      <PageContainer v-for="(container, index) in pageContainers" :key="index">
+      <PageContainer v-for="(container, index) in pageContainers" :key="index" :title="container.page" @close="removePageContainer(index)">
         <component :is="getPageComponent(container.page)" />
       </PageContainer>
     </div>
@@ -45,6 +45,9 @@ export default {
         character: "CharacterPage",
       };
       return pageMap[page] || null;
+    },
+    removePageContainer(index) {
+      this.pageContainers.splice(index, 1);
     },
   },
 };
