@@ -10,7 +10,7 @@
     @mousedown="startDrag"
     @touchstart="startDrag"
   >
-    <!-- Top bar -->
+
     <div
       class="top-bar"
       @mousedown.stop="startDrag"
@@ -20,10 +20,10 @@
       <button class="close-button" @click="closeContainer">✕</button>
     </div>
 
-    <!-- Content slot -->
+
     <slot></slot>
 
-    <!-- Resize handle -->
+
     <div
       class="resize-handle"
       @mousedown.stop="startResize"
@@ -37,7 +37,7 @@ export default {
   props: {
     title: {
       type: String,
-      default: "Page Container", // Default title if none is provided
+      default: "Page Container",
     },
   },
   data() {
@@ -129,48 +129,64 @@ export default {
 <style>
 .page-container {
   position: absolute;
-  border: 1px solid #ccc;
-  background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-top: #fff solid 2px;
+  border-left: #fff solid 2px;
+  border-right: #000 solid 2px;
+  border-bottom: #000 solid 2px;
+  background-color: #c3c7cb;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  font-family: "Microsoft Sans Serif", Arial, sans-serif;
 }
 
 .top-bar {
-  background-color: #0078d7;
+  background-color: #000080;
   color: white;
-  padding: 8px;
+  padding: 4px 8px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   cursor: move;
+  border: #c3c7cb solid 2px;
 }
 
 .title {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .close-button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 16px;
+  background-color: #c3c7cb;
+  border: 1px solid #000;
+  color: black;
+  font-size: 12px;
+  font-weight: bold;
+  width: 16px;
+  height: 16px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   cursor: pointer;
+  box-shadow: 1px 1px 0px #fff, -1px -1px 0px #000;
 }
 
-.close-button:hover {
-  color: #ff5c5c;
+.close-button:active {
+  box-shadow: inset 1px 1px 0px #000, inset -1px -1px 0px #fff;
 }
 
 .resize-handle {
   width: 10px;
   height: 10px;
-  background-color: #ccc;
+  background-color: #c3c7cb;
+  border: 2px solid #000;
   position: absolute;
   bottom: 0;
   right: 0;
   cursor: se-resize;
+
 }
 </style>

@@ -5,6 +5,7 @@
       <desktop-icon icon="/icons/rules.svg" targetPage="rules" @icon-click="addPageContainer" text="Rules"/>
       <desktop-icon icon="/icons/file.svg" targetPage="characters" @icon-click="addPageContainer" text="Characters"/>
       <desktop-icon icon="/icons/user.svg" targetPage="character" @icon-click="addPageContainer" text="Character"/>
+      <desktop-icon icon="/icons/user.svg" targetPage="login" @icon-click="addPageContainer" text="Login"/>
     </div>
 
     <div class="page-containers">
@@ -19,6 +20,7 @@
 import PageContainer from "@/components/PageContainer.vue";
 import DesktopIcon from "@/components/desktopIcon.vue";
 import { defineAsyncComponent } from "vue";
+import Login from "./login.vue";
 
 export default {
   components: {
@@ -27,6 +29,7 @@ export default {
     RulesPage: defineAsyncComponent(() => import("./rules.vue")),
     CharactersPage: defineAsyncComponent(() => import("./characters.vue")),
     CharacterPage: defineAsyncComponent(() => import("./character.vue")),
+    LoginPage: defineAsyncComponent(() => import("./login.vue")),
   },
   data() {
     return {
@@ -42,6 +45,7 @@ export default {
         rules: "RulesPage",
         characters: "CharactersPage",
         character: "CharacterPage",
+        login: "LoginPage",
       };
       return pageMap[page] || null;
     },
